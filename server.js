@@ -1,12 +1,224 @@
 var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
-
+var Pool=require('pg').Pool;
 var app = express();
+var crypto= require('crypto');
+var bodyParser=require('body-parser');
 app.use(morgan('combined'));
-
+app.use(bodyParser.json());
+//Home page bruv
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
+});
+
+
+
+
+
+//db EX3 Good one
+var config={
+    user: 'postgres',
+    database: 'postgres',
+    host: 'localhost',
+    port: '5432',
+    password: 'tiger'
+    ////////instead of proces.env.DB_PASSWORD (Wasn't working)
+};
+var pool= new Pool(config);
+app.get('/dbarticles/:aname', function(req,res){
+   pool.query('Select * from article where title= $1', [req.params.aname], function(err,result){
+        if (err){
+          res.status(500).send(err.toString());
+        }
+        else{
+          if(result.rows===0){
+            res.status(404).send(" Article not found ")
+          }
+          else{
+            res.send(crTemplate(result.rows[0]));
+            //res.send(JSON.stringify(result.rows);
+            //or if you want whole result , (result)
+          }
+         }
+    });
+});
+function crTemplate(data){
+var title=data.title;
+var heading=data.heading;
+var content=data.content;
+var date=data.date;
+var HTMLTemplate=`
+<html>
+    <head>
+        <title>
+        ${title}
+        </title>
+        <link href="/ui/style.css" rel="stylesheet" />
+    </head>
+    <body>
+         <h1><center>${heading}</center></h1>
+         ${content}
+         <hr>
+         <h4> ${date} </h4>
+         <h4> Now this: ${date.toDateString()} is using .toDateString() function <h4>
+         <hr>
+        <script type="text/javascript" src="/ui/main.js">
+        </script>
+    </body>
+</html>`;
+return HTMLTemplate;
+}
+//db EX3ends
+
+
+
+//Module4 (Hash,Sessions,Curl) etc.
+function hash(input,salt){
+var hash=crypto.pbkdf2Sync(input,salt,10000,512,'sha512').toString('hex');
+return ['pbkdf',10000,salt,hash].join('$');
+
+}
+
+
+app.get('/password/:input', function(req,res){
+    var hashedString=hash(req.params.input,'this-salt-value');
+    res.send(hashedString.toString());
+});
+
+app.post('/create-user',function(req,res){
+    //we have usern,password
+    var username=req.body.username;
+    var password=req.body.password;
+    var salt=crypto.getRandomBytes(128).toString('hex');
+    var dbstring=hash(password,salt);
+    pool.query('Insert into users(username,password) values($1,$2)',[username,dbstring],function(err,result){
+        if(err){
+          res.status(500).send(err.toString());
+        } else{
+          res.send("User Created Successfully");
+        }
+    });
+
+});
+
+
+
+
+
+
+
+
+
+
+
+//M4 ends
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Returns a list of users After submitting a user's name in index.html
+//and displays it in <ul>.innerHTML also,
+// submit?name= is why we use req.query.names and not req.params.name
+//Use JSON stringify to convert Javascript Array to String and use send()
+//And in main.js, JSON.parse to convert back to array, after retrieval;
+var names=[];
+app.get('/submit',function(req,res){
+  var namegotten=req.query.name;
+  names.push(namegotten);
+  res.send(JSON.stringify(names));
+});
+
+
+
+
+
+
+//access counter endpoint using Button AJAX API call from index.html
+//Does not refresh content and values changes when button counter is clicked
+//Because we make XMLHTTPRequest to counter endpoint which increments value
+//from main.js
+var counter=0;
+app.get('/counter', function (req, res) {
+  counter=counter+1;
+  res.send("<h3>"+counter.toString()+"</h3>");
+});
+
+
+
+
+
+//Send a request for Main.js to work.
+app.get('/ui/main.js', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui', 'main.js'));
+});
+
+
+
+
+
+
+
+//This will send Article 2 to render htmlcode using Create template function
+//Remember, I had to create crTemplate in the beginning because my database
+//had another column date.
+//Otherwise, direct content can be rendered using server side HTML
+var article2={
+title:'Article 2 is in the form of a template',
+heading:'ARTICLE TWO PICKLE RICK!!!!',
+content:`
+<div class="center">
+    <img src="/ui/madi.png" class="img-medium"/>
+</div>
+<br>
+<div class="center text-big bold">
+    Hi! I am your webapp.
+</div>
+<div>`
+};
+
+function createTemplate(data){
+var title=data.title;
+var heading=data.heading;
+var content=data.content;
+var HTMLTemplate=`
+<html>
+    <head>
+        <title>
+        ${title}
+        </title>
+        <link href="/ui/style.css" rel="stylesheet" />
+    </head>
+    <body>
+         <h1><center>${heading}</center></h1>
+         ${content}
+        <script type="text/javascript" src="/ui/main.js">
+        </script>
+    </body>
+</html>`;
+return HTMLTemplate;
+}
+
+app.get('/article-two',function (req,res){
+  res.send(createTemplate(article2));
+});
+
+
+//This below will send article-one html directly
+app.get('/article-one',function (req,res){
+  res.sendFile(path.join(__dirname,'ui','article-one.html'));
 });
 
 app.get('/ui/style.css', function (req, res) {
