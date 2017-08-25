@@ -128,6 +128,7 @@ app.post('/login',function(req,res){
                 if(hashedPassword===dbString){
                     res.send("Logged In!");
                     req.session.auth={userid: result.rows[0].userid};
+                    console.log(req.session.auth.toString());
                     
                 }
                 else{
@@ -148,12 +149,14 @@ app.get('/check-login', function(req,res){
      }else{
          res.send("You are not logged in.");
      }
+     console.log(req.session.auth.toString()+"   endpoint: /check-login");
 });
 
 
 app.get('/logout', function(req,res){
      delete req.session.auth;
      res.send("Logged Out.");
+     console.log(req.session.auth.toString()+"   endpoint: /logout");
 });
 
 
