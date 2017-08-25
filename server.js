@@ -20,7 +20,7 @@ app.get('/', function (req, res) {
 var config={
     user: 'endecipher',
     database: 'endecipher',
-    host: 'http://endecipher.imad.hasura-app.io',
+    host: 'http://db.imad.hasura-app.io',
     port: '5432',
     password: process.env.DB_PASSWORD
     ////////instead of process.env.DB_PASSWORD (Wasn't working)
