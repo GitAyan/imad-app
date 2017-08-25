@@ -90,7 +90,8 @@ return ['pbkdf',10000,salt,hash].join('$');
 
 app.get('/password/:input', function(req,res){
     var hashedString=hash(req.params.input,'this-salt-value');
-    res.send(len(hashedString).toString());
+    res.send(hashedString.toString()+"<hr>"+ hashedString.split('$')[3].length);
+    
 });
 
 app.post('/create-user',function(req,res){
