@@ -124,7 +124,7 @@ if (request.readyState===XMLHttpRequest.DONE){
      
      
    }
-}
+
 }//onreadystatechange ends
 var name=document.getElementById('uiusername').value;
 var password=document.getElementById('uipassword').value;
