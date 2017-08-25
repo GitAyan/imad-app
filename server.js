@@ -128,7 +128,6 @@ app.post('/login',function(req,res){
                 if(hashedPassword===dbString){
                     res.send("Logged In!");
                     req.session.auth={userid: result.rows[0].userid};
-                    
                 }
                 else{
                     res.send("Unknown error. Invalid Credentials."); 
