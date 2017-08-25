@@ -126,14 +126,14 @@ if (request.readyState===XMLHttpRequest.DONE){
    }
 
 }//onreadystatechange ends
-var name=document.getElementById('uiusername').value;
+var username=document.getElementById('uiusername').value;
 var password=document.getElementById('uipassword').value;
 console.log("Username: "+username);
 console.log("Password: "+password);
 
 request.open('POST','http://endecipher.imad.hasura-app.io/login',true);
 request.setRequestHeader('Content-Type', 'application/json');
-request.send(JSON.stringify({username:name, password:password}));
+request.send(JSON.stringify({username:username, password:password}));
 
 }
 
