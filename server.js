@@ -147,10 +147,8 @@ app.get('/log', function(req,res){
          res.send("You are logged in as UserID: "+ req.session.auth.userid.toString());
      }
      else{
-        
-         res.send("You aren't logged in.");
+         res.send("Hey:"+JSON.stringify(req.session.auth)+JSON.stringify(req.session.auth.userid))
      }
-
 });
 
 
