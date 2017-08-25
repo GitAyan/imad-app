@@ -144,7 +144,7 @@ app.post('/login',function(req,res){
 
 
 app.get('/check-login', function(req,res){
-     res.set('Content-Length','70');
+     res.set({'Content-Length':'700'});
      if(req.session && req.session.auth && req.session.auth.userid){
          res.send("You are logged in as userID : "+ req.session.auth.userid.toString());
      }else{
@@ -155,6 +155,7 @@ app.get('/check-login', function(req,res){
 
 
 app.get('/logout', function(req,res){
+    res.set({'Content-Length':'700'});
      delete req.session.auth;
      res.send("Logged Out.");
      console.log(req.session.auth.toString()+"   endpoint: /logout");
