@@ -18,13 +18,15 @@ app.get('/', function (req, res) {
 
 //db EX3 Good one
 var config={
-    user: 'postgres',
-    database: 'postgres',
+    user: 'endecipher',
+    database: 'endecipher',
     host: 'localhost',
     port: '5432',
-    password: 'tiger'
-    ////////instead of proces.env.DB_PASSWORD (Wasn't working)
+    password: process.env.DB_PASSWORD
+    ////////instead of process.env.DB_PASSWORD (Wasn't working)
 };
+
+
 var pool= new Pool(config);
 app.get('/dbarticles/:aname', function(req,res){
    pool.query('Select * from article where title= $1', [req.params.aname], function(err,result){
