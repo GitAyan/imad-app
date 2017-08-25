@@ -81,7 +81,7 @@ if (request.readyState===XMLHttpRequest.DONE){
 
 }//onreadystatechange ends
 var name=document.getElementById('name').value;
-request.open('GET','http://http://endecipher.imad.hasura-app.io/submit?name='+name,true);
+request.open('GET','http://endecipher.imad.hasura-app.io/submit?name='+name,true);
 request.send(null);
 
 }//namebutton onclick ends
