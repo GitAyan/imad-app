@@ -1,16 +1,36 @@
 <!doctype html>
 <html>
     <head>
-        <link href="/ui/style.css" rel="stylesheet" />
+    <link href="/ui/style.css" rel="stylesheet" />
+    <script src="/ui/main.js" type="text/javascript">
+     //alert("Hello! This is an alert in the HTML code");
+    </script>
     </head>
+
     <body>
         <div class="center">
-            <img src="/ui/madi.png" class="img-medium"/>
+            <img src="/ui/madi.png" class="img-medium" id="img"/>
         </div>
         <br>
-        <div class="center text-big bold">
+        <div class="center text-big bold" id="bigtext">
+
             Hi! I am your webapp.
+
+
         </div>
+    <input type="button" id="butc" function="onclick" value="Change text to BABA"/>
+	<div style="max-width:400px; text-align: center; ">
+    <hr style="width:20px">
+	Click this button: <span> <input type="button" id="button1" function="onclick" value="API"/> </span> to
+    know that you have achieved <span id="spanitem"> 0 </span> counter value.
+    </div>
+  <hr>
+  <hr>
+  <hr>
+  <input type="text" placeholder="name" id="name">
+  <input type="submit" value="submit" id="namebutton">
+  <ul id="namelist">
+  </ul>
         <script type="text/javascript" src="/ui/main.js">
         </script>
     </body>
