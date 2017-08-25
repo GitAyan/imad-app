@@ -105,7 +105,7 @@ request.send(null);
 
 
 
-var namebutton=document.getElementById('uisubmit');
+var uisubmit=document.getElementById('uisubmit');
 uisubmit.onclick=function(){
 var request=new XMLHttpRequest();
 request.onreadystatechange=function(){
