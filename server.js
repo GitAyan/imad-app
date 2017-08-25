@@ -9,7 +9,7 @@ var session=require('express-session');
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(session({
-secret: 'RandomValueWithWhichCookiesWillEncrypt',
+secret: 'ValueRandom',
 cookie: {maxAge: 1000*60*60*24*30}
 }));
 //Home page bruv
@@ -144,21 +144,21 @@ app.post('/login',function(req,res){
 
 
 app.get('/check-login', function(req,res){
-     res.set({'Content-Length':'700'});
+    
      if(req.session && req.session.auth && req.session.auth.userid){
          res.send("You are logged in as userID : "+ req.session.auth.userid.toString());
-     }else{
+     }
+     else{
          res.send("You are not logged in.");
      }
-     console.log(req.session.auth.toString()+"   endpoint: /check-login");
+
 });
 
 
 app.get('/logout', function(req,res){
-    res.set({'Content-Length':'700'});
      delete req.session.auth;
      res.send("Logged Out.");
-     console.log(req.session.auth.toString()+"   endpoint: /logout");
+     
 });
 
 
