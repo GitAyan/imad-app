@@ -144,6 +144,7 @@ app.post('/login',function(req,res){
 
 
 app.get('/check-login', function(req,res){
+     res.set('Content-Length','70');
      if(req.session && req.session.auth && req.session.auth.userid){
          res.send("You are logged in as userID : "+ req.session.auth.userid.toString());
      }else{
