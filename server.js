@@ -128,7 +128,6 @@ app.post('/login',function(req,res){
                 if(hashedPassword===dbString){
                     res.send("Logged In!");
                     req.session.auth={userid: result.rows[0].userid};
-                    console.log(req.session.auth.toString());
                     
                 }
                 else{
@@ -146,10 +145,10 @@ app.post('/login',function(req,res){
 app.get('/check-login', function(req,res){
     
      if(req.session && req.session.auth && req.session.auth.userid){
-         res.send("You are logged in as userID : "+ req.session.auth.userid.toString());
+         res.send("You are logged in: "+ req.session.auth.userid.toString());
      }
      else{
-         res.send("You are not logged in.");
+         res.send("You aren't logged in.");
      }
 
 });
