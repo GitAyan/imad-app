@@ -104,6 +104,35 @@ app.post('/create-user',function(req,res){
 
 });
 
+app.post('/login',function(req,res){
+    //we have usern,password
+    var username=req.body.username;
+    var password=req.body.password;
+    
+    var dbstring=hash(password,salt);
+    pool.query('select * from users where username=$1',[username],function(err,result){
+        if(err){
+          res.status(500).send(err.toString());
+        } else{
+            if(result.rows.length===0){
+                res.status(403).send("Forbidden | No user");
+            }
+            else{
+                var dbString=result.rows[0].password;
+                var salt=dbString.split('$')[2];
+                var hashedPassword=hash(password,salt);
+                if(hashedPassword===dbstring){
+                    res.send("Logged In!");
+                }
+                else{
+                    res.send("User Created Successfully"); 
+                }
+            }
+          
+        }
+    });
+
+});
 
 
 
