@@ -5,8 +5,13 @@ var Pool=require('pg').Pool;
 var app = express();
 var crypto= require('crypto');
 var bodyParser=require('body-parser');
+var session=require('express-session');
 app.use(morgan('combined'));
 app.use(bodyParser.json());
+app.use(session({
+secret: 'RandomValueWithWhichCookiesWillEncrypt',
+cookie: {maxAge: 1000*60*60*24*30}
+}));
 //Home page bruv
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
@@ -122,6 +127,8 @@ app.post('/login',function(req,res){
                 var hashedPassword=hash(password,salt);
                 if(hashedPassword===dbString){
                     res.send("Logged In!");
+                    req.session.auth={userid: result.rows[0].userid};
+                    
                 }
                 else{
                     res.send("Unknown error. Invalid Credentials."); 
@@ -135,7 +142,19 @@ app.post('/login',function(req,res){
 
 
 
+app.get('/check-login', function(req,res){
+     if(req.session && req.session.auth && req.session.auth.userid){
+         res.send("You are logged in as userID : "+ req.session.auth.userid.toString());
+     }else{
+         res.send("You are not logged in.");
+     }
+});
 
+
+app.get('/logout', function(req,res){
+     delete req.session.auth;
+     res.send("Logged Out.");
+});
 
 
 
