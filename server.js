@@ -142,12 +142,12 @@ app.post('/login',function(req,res){
 
 
 app.get('/check-login', function(req,res){
-    
-     if(req.session && req.session.auth && req.session.auth.userid !=NULL){
+     console.log(JSON.stringify(req.session.auth));
+     if(req.session && req.session.auth && req.session.auth.userid){
          res.send("You are logged in: "+ req.session.auth.userid.toString());
      }
      else{
-         console.log(req.session);
+        
          res.send("You aren't logged in.");
      }
 
