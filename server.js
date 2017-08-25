@@ -124,7 +124,7 @@ app.post('/login',function(req,res){
                     res.send("Logged In!");
                 }
                 else{
-                    res.send("User Created Successfully"); 
+                    res.send("Unknown error. Invalid Credentials."); 
                 }
             }
           
