@@ -143,13 +143,13 @@ app.post('/login',function(req,res){
 
 
 
-app.get('/log', function(req,res){
+app.get('/check-login', function(req,res){
      console.log(JSON.stringify(req.session.auth));
      if(req.session && req.session.auth && req.session.auth.userid){
          res.send("You are logged in as UserID: "+ req.session.auth.userid.toString());
      }
      else{
-         res.send("Hey?");
+         res.send("You're not Logged in. Who are you?");
      }
 });
 
