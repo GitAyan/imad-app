@@ -133,8 +133,8 @@ app.post('/login',function(req,res){
                     var resp = {
                     message : message
                     };
-                    res.send(JSON.stringify(resp));
-                     //res.send('User successfully created: ' + username);
+                    //res.send(JSON.stringify(resp));
+                     res.send('User successfully created: ' + username);
                      //res.send("Logged In!");
                 }
                 else{
