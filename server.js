@@ -104,7 +104,15 @@ app.post('/create-user',function(req,res){
         if(err){
           res.status(500).send(err.toString());
         } else{
-          res.send("User Created Successfully");
+            
+          
+                    var message = "User successfully created: " + username;
+                    var resp = {
+                    message : message
+                    };
+                    res.send(JSON.stringify(resp));
+                      
+          
         }
     });
 
@@ -129,13 +137,13 @@ app.post('/login',function(req,res){
                 if(hashedPassword===dbString){
                    
                     req.session.auth={userid: result.rows[0].userid};
-                    var message = "User successfully created: " + username;
+                    var message = "User successfully Logged In:  " + username;
                     var resp = {
                     message : message
                     };
-                    //res.send(JSON.stringify(resp));
-                     res.send('User successfully created: ' + username);
-                     //res.send("Logged In!");
+                    res.send(JSON.stringify(resp));
+                    
+                     //res.send("Logged In!"); String responses won't work, only JSON strings!
                 }
                 else{
                     res.send("Unknown error. Invalid Credentials."); 
@@ -152,7 +160,12 @@ app.post('/login',function(req,res){
 app.get('/check-login', function(req,res){
      console.log(JSON.stringify(req.session.auth));
      if(req.session && req.session.auth && req.session.auth.userid){
-         res.send("You are logged in as UserID: "+ req.session.auth.userid.toString());
+         
+                    var message = "You are logged in as UserID: "+ req.session.auth.userid.toString();
+                    var resp = {
+                    message : message
+                    };
+                    res.send(JSON.stringify(resp));
      }
      else{
          res.send("You're not Logged in. Who are you?");
@@ -162,7 +175,12 @@ app.get('/check-login', function(req,res){
 
 app.get('/logout', function(req,res){
      delete req.session.auth;
-     res.send("Logged Out.");
+     var message = "Logging Out for User: " + username;
+                    var resp = {
+                    message : message
+                    };
+                    res.send(JSON.stringify(resp));
+                    
      
 });
 
