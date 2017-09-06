@@ -258,14 +258,7 @@ title:'Article 2 is in the form of a template',
 heading:'ARTICLE@@@@@2',
 date:'2017-5-9',
 content:`
-<div class="center">
-    <img src="/ui/madi.png" class="img-medium"/>
-</div>
-<br>
-<div class="center text-big bold">
-    Hi! I am your webapp.
-</div>
-<div>`
+Some Article 2 Content`
 };
 
 function createTemplate(data){
