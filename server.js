@@ -255,6 +255,7 @@ app.get('/ui/main.js', function (req, res) {
 var article2={
 id:'1',    
 title:'Article 2 is in the form of a template',
+heading:'ARTICLE@@@@@2',
 date:'2017-5-9',
 content:`
 <div class="center">
