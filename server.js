@@ -253,8 +253,9 @@ app.get('/ui/main.js', function (req, res) {
 //had another column date.
 //Otherwise, direct content can be rendered using server side HTML
 var article2={
+id:'1',    
 title:'Article 2 is in the form of a template',
-heading:'ARTICLE TWO PICKLE RICK!!!!',
+date:'2017-5-9',
 content:`
 <div class="center">
     <img src="/ui/madi.png" class="img-medium"/>
@@ -288,8 +289,8 @@ var HTMLTemplate=`
 return HTMLTemplate;
 }
 
-app.get('/article-two',function (req,res){
-  res.send(createTemplate(article2));
+app.get('/get-articles',function (req,res){
+  res.send(JSON.stringify(article2));
 });
 
 
